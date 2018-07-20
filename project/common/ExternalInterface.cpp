@@ -6,32 +6,14 @@
 #define NEKO_COMPATIBLE
 #endif
 
-
 #include <hx/CFFI.h>
-#include "Utils.h"
 
+extern "C" {
 
-using namespace extension_firebase;
+    void firebase_main () {
+	    val_int(0); // Fix Neko init
+    }
+    DEFINE_ENTRY_POINT (firebase_main);
 
-
-
-static value extension_firebase_sample_method (value inputValue) {
-	
-	int returnValue = SampleMethod(val_int(inputValue));
-	return alloc_int(returnValue);
-	
+    extern "C" int firebase_register_prims () { return 0; }
 }
-DEFINE_PRIM (extension_firebase_sample_method, 1);
-
-
-
-extern "C" void extension_firebase_main () {
-	
-	val_int(0); // Fix Neko init
-	
-}
-DEFINE_ENTRY_POINT (extension_firebase_main);
-
-
-
-extern "C" int extension_firebase_register_prims () { return 0; }

@@ -1,4 +1,4 @@
-package;
+package extension.firebase;
 
 #if cpp
 import cpp.Lib;
@@ -11,37 +11,38 @@ import openfl.utils.JNI;
 #end
 
 
-class Extension_firebase {
+class Firebase {
 	
 	
-	public static function sampleMethod (inputValue:Int):Int {
-		
-		#if (android && openfl)
-		
-		var resultJNI = extension_firebase_sample_method_jni(inputValue);
-		var resultNative = extension_firebase_sample_method(inputValue);
-		
-		if (resultJNI != resultNative) {
-			
-			throw "Fuzzy math!";
-			
-		}
-		
-		return resultNative;
-		
+	public static function sendAnalyticsEvent (eventName:String, payload:String):Void {
+
+		#if (ios || android)
+			extension_firebase_send_analytics_event(eventName, payload);
 		#else
-		
-		return extension_firebase_sample_method(inputValue);
-		
+			trace("sendAnalyticsEvent not implemented on this platform.");
 		#end
-		
 	}
-	
-	
-	private static var extension_firebase_sample_method = Lib.load ("extension_firebase", "extension_firebase_sample_method", 1);
-	
-	#if (android && openfl)
-	private static var extension_firebase_sample_method_jni = JNI.createStaticMethod ("org.haxe.extension.Extension_firebase", "sampleMethod", "(I)I");
+
+	/*public static function getInstanceIDToken ():String {
+
+		#if (ios || android)
+			return extension_firebase_get_instance_id_token();
+		#else
+		trace("getInstanceIDToken not implemented on this platform.");
+		return null;
+		#end
+	}*/
+
+
+
+	#if (ios)
+	private static var extension_firebase_send_analytics_event = CFFI.load ("firebase", "sendFirebaseAnalyticsEvent", 2);
+	//private static var extension_firebase_get_instance_id_token = CFFI.load ("firebase", "getInstanceIDToken", 0);
+	#end
+
+	#if (android)
+	private static var extension_firebase_send_analytics_event = JNI.createStaticMethod("extension.java.Firebase", "sendFirebaseAnalyticsEvent", "(Ljava/lang/String;Ljava/lang/String;)V");
+	//private static var extension_firebase_get_instance_id_token = JNI.createStaticMethod("extension.java.Firebase", "getInstanceIDToken", "()Ljava/lang/String;");
 	#end
 	
 	
