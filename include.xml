@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
 	
-	<ndll name="extension_firebase" />
-	
-	<!-- Use the following for an Android Java extension, not needed otherwise -->
-	
-	<dependency name="extension_firebase" path="dependencies/android" if="android" />
-	<android extension="org.haxe.extension.Extension_firebase" />
+	<ndll name="firebase" if="ios || blackberry" />	
+	<dependency name="firebase" path="dependencies/android" if="android" />
+	<android extension="org.haxe.extension.Firebase" />
 	
 </project>
