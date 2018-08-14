@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
 	
-	<ndll name="firebase" if="ios || blackberry" />	
+	<ndll name="firebase" unless="android" />
+	
+	<section if="ios">
+		
+	</section>
+	
 	<dependency name="firebase" path="dependencies/android" if="android" />
 	<android extension="org.haxe.extension.Firebase" />
 	
