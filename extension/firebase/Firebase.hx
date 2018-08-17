@@ -18,6 +18,7 @@ class Firebase {
 
 		#if (ios || android)
 			extension_firebase_send_analytics_event(eventName, payload);
+			trace("Firebase event send " + eventName);
 		#else
 			trace("sendAnalyticsEvent not implemented on this platform.");
 		#end

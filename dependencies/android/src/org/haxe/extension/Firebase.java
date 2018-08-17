@@ -25,6 +25,7 @@ import org.haxe.extension.Extension;
 
 public class Firebase extends Extension {
 
+    static final String TAG = "FIREBASE-EXTENSION";
 
     private static Map<String, String> getPayloadFromJson(String jsonString) {
         Type type = new TypeToken<Map<String, String>>(){}.getType();
@@ -46,7 +47,7 @@ public class Firebase extends Extension {
 
 
     public static void sendFirebaseAnalyticsEvent(String eventName, String jsonPayload) {
-        Log.i("trace","Firebase.java: sendFirebaseAnalyticsEvent name= " + eventName + ", payload= " + jsonPayload);
+        Log.d(TAG, "Firebase.java: sendFirebaseAnalyticsEvent name= " + eventName + ", payload= " + jsonPayload);
 
         Application mainApp = Extension.mainActivity.getApplication();
         FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(mainApp);
@@ -57,9 +58,86 @@ public class Firebase extends Extension {
 
     public static String getInstanceIDToken() {
         String idToken = FirebaseInstanceId.getInstance().getToken();
-        Log.i("trace","Firebase.java: getInstanceIDToken= " + idToken);
+        Log.d(TAG, "Firebase.java: getInstanceIDToken= " + idToken);
 
         return idToken;
+    }
+
+
+
+    /**
+     * Called when the activity is starting.
+     */
+    public void onCreate (Bundle savedInstanceState) {
+
+        Log.d(TAG, "Firebase.java: onCreate ");
+
+    }
+
+
+        /**
+         * Perform any final cleanup before an activity is destroyed.
+         */
+    public void onDestroy () {
+
+
+
+    }
+
+
+    /**
+     * Called as part of the activity lifecycle when an activity is going into
+     * the background, but has not (yet) been killed.
+     */
+    public void onPause () {
+
+
+
+    }
+
+
+    /**
+     * Called after {@link #onStop} when the current activity is being
+     * re-displayed to the user (the user has navigated back to it).
+     */
+    public void onRestart () {
+
+
+
+    }
+
+
+    /**
+     * Called after {@link #onRestart}, or {@link #onPause}, for your activity
+     * to start interacting with the user.
+     */
+    public void onResume () {
+
+
+
+    }
+
+
+    /**
+     * Called after {@link #onCreate} &mdash; or after {@link #onRestart} when
+     * the activity had been stopped, but is now again being displayed to the
+     * user.
+     */
+    public void onStart () {
+
+        Log.d(TAG, "Firebase.java: onStart ");
+
+    }
+
+
+    /**
+     * Called when the activity is no longer visible to the user, because
+     * another activity has been resumed and is covering this one.
+     */
+    public void onStop () {
+
+
+
     }
 
 }
