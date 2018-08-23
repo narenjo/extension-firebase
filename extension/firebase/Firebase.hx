@@ -24,7 +24,7 @@ class Firebase {
 		#end
 	}
 
-	/*public static function getInstanceIDToken ():String {
+	public static function getInstanceIDToken ():String {
 
 		#if (ios || android)
 			return extension_firebase_get_instance_id_token();
@@ -32,18 +32,18 @@ class Firebase {
 		trace("getInstanceIDToken not implemented on this platform.");
 		return null;
 		#end
-	}*/
+	}
 
 
 
 	#if (ios)
-	private static var extension_firebase_send_analytics_event = CFFI.load ("firebase", "sendFirebaseAnalyticsEvent", 2);
-	//private static var extension_firebase_get_instance_id_token = CFFI.load ("firebase", "getInstanceIDToken", 0);
+	private static var extension_firebase_send_analytics_event = Lib.load ("firebase", "sendFirebaseAnalyticsEvent", 2);
+	private static var extension_firebase_get_instance_id_token = Lib.load ("firebase", "getInstanceIDToken", 0);
 	#end
 
 	#if (android)
 	private static var extension_firebase_send_analytics_event = JNI.createStaticMethod("org.haxe.extension.Firebase", "sendFirebaseAnalyticsEvent", "(Ljava/lang/String;Ljava/lang/String;)V");
-	//private static var extension_firebase_get_instance_id_token = JNI.createStaticMethod("org.haxe.extension.Firebase", "getInstanceIDToken", "()Ljava/lang/String;");
+	private static var extension_firebase_get_instance_id_token = JNI.createStaticMethod("org.haxe.extension.Firebase", "getInstanceIDToken", "()Ljava/lang/String;");
 	#end
 	
 	
