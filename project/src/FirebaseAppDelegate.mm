@@ -3,14 +3,16 @@
 #import <objc/runtime.h>
 #import <UIKit/UIKit.h>
 #import <Firebase.h>
-#import <FirebaseMessaging/FirebaseMessaging.h>
+//#import <FirebaseMessaging/FirebaseMessaging.h>
 
 // Implement UNUserNotificationCenterDelegate to receive display notification via APNS for devices running iOS 10 and above.
+/*
 #if defined(__IPHONE_10_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
 #import <UserNotifications/UserNotifications.h>
 @interface FirebaseAppDelegate () <UNUserNotificationCenterDelegate, FIRMessagingDelegate>
 @end
 #endif
+*/
 
 // Copied from Apple's header in case it is missing in some cases (e.g. pre-Xcode 8 builds).
 #ifndef NSFoundationVersionNumber_iOS_9_x_Max
@@ -48,11 +50,13 @@ NSString* firebaseInstanceIdToken = @"";
 {
     NSLog(@"FirebaseAppDelegate: willFinishLaunchingWithOptions");
     [FIRApp configure];
-    [FIRMessaging messaging].delegate = self;
+    //[FIRMessaging messaging].delegate = self;
 
     // Push Notification Permission
     // This code will request permission from the user to accept Push Notifications on their device.
     // It is displayed when the app is launched. We will want some better control around when and how we ask users to enable push
+    
+    /*
     if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_9_x_Max) {
         NSLog(@"FirebaseAppDelegate: Requesting <= iOS 9 Notifications");
         UIUserNotificationType allNotificationTypes = (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
@@ -72,10 +76,11 @@ NSString* firebaseInstanceIdToken = @"";
         #endif
     }
     [[UIApplication sharedApplication] registerForRemoteNotifications];
-
+     
+    
     // Token may be null if it has not been generated yet.
-    NSLog(@"FirebaseAppDelegate: FCM registration token: %@", [FIRMessaging messaging].FCMToken);
-
+    //NSLog(@"FirebaseAppDelegate: FCM registration token: %@", [FIRMessaging messaging].FCMToken);
+*/
     return YES;
 }
 
@@ -90,7 +95,7 @@ NSString* firebaseInstanceIdToken = @"";
     [FIRAnalytics logEventWithName:eventName parameters:parsedData];
     return YES;
 }
-
+/*
 - (void)messaging:(nonnull FIRMessaging *)messaging didRefreshRegistrationToken:(nonnull NSString *)fcmToken {
     // Note that this callback will be fired everytime a new token is generated, including the first
     // time. So if you need to retrieve the token as soon as it is available this is where that
@@ -148,7 +153,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
 
     completionHandler(UIBackgroundFetchResultNewData);
 }
-
+*/
 - (NSString*)getInstanceIDToken {
     return firebaseInstanceIdToken;
 }
