@@ -14,6 +14,9 @@
 #endif
 */
 
+@interface FirebaseAppDelegate ()
+@end
+
 // Copied from Apple's header in case it is missing in some cases (e.g. pre-Xcode 8 builds).
 #ifndef NSFoundationVersionNumber_iOS_9_x_Max
 #define NSFoundationVersionNumber_iOS_9_x_Max 1299
