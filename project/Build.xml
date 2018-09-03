@@ -14,6 +14,7 @@
 
 		<compilerflag value="-Iinclude"/>
 		<compilerflag value="-F../dependencies/ios/Analytics/" />
+		<compilerflag value="-F../dependencies/ios/Messaging/" />
 		<compilerflag value="-I../dependencies/ios/includes"/>
 
 		<file name="src/FirebaseAppDelegate.mm" />

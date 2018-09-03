@@ -7,12 +7,14 @@
 
 + (instancetype)sharedInstance;
 
-- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
+//- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 
 - (BOOL)sendFirebaseAnalyticsEvent:(NSString*)eventName jsonPayload:(NSString *)jsonPayload;
 
-- (NSString*)getInstanceIDToken;
+//- (NSString*)getInstanceIDToken;
 
 @end
+
+
 
 #endif

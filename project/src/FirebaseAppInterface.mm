@@ -13,10 +13,11 @@ namespace extension_ios_firebase {
             jsonPayload:[NSString stringWithUTF8String:val_string(jsonPayload)]
         ]);
     }
-
+/*
     static value getInstanceIDToken() {
         NSLog(@"extension_ios_firebase getInstanceIDToken");
         NSString* idToken = [[FirebaseAppDelegate sharedInstance] getInstanceIDToken];
         return alloc_string([idToken UTF8String]);
     }
+ */
 }
