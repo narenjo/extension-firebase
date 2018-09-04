@@ -11,9 +11,9 @@
 
 - (BOOL)sendFirebaseAnalyticsEvent:(NSString*)eventName jsonPayload:(NSString *)jsonPayload;
 
-- (BOOL)setUserProperty:(nullable NSString *)propName propValue:(NSString *)propValue
+- (BOOL)setUserProperty:(NSString *)propName propValue:(NSString *)propValue;
 
-- (BOOL)setCurrentScreen:(nullable NSString *)screenName screenClass:(nullable NSString *)screenClass
+- (BOOL)setCurrentScreen:(NSString *)screenName screenClass:(NSString *)screenClass;
 
 //- (NSString*)getInstanceIDToken;
 

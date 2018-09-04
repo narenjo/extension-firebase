@@ -161,7 +161,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
 
 */
 
-- (BOOL)setCurrentScreen:(nullable NSString *)screenName screenClass:(nullable NSString *)screenClass
+- (BOOL)setCurrentScreen:(NSString *)screenName screenClass:(NSString *)screenClass
 {
     NSLog(@"FirebaseAppDelegate: setScreen name= %@, class= %@", screenName, screenClass);
     
@@ -169,7 +169,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     return YES;
 }
 
-- (BOOL)setUserProperty:(NSString *)propName propValue:(nullable NSString *)propValue
+- (BOOL)setUserProperty:(NSString *)propName propValue:(NSString *)propValue
 {
     NSLog(@"FirebaseAppDelegate: setUserProperty key= %@, val= %@", propName, propValue);
     
