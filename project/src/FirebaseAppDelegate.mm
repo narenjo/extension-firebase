@@ -161,6 +161,22 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
 
 */
 
+- (BOOL)setCurrentScreen:(nullable NSString *)screenName screenClass:(nullable NSString *)screenClass
+{
+    NSLog(@"FirebaseAppDelegate: setScreen name= %@, class= %@", screenName, screenClass);
+    
+    [FIRAnalytics setScreenName:screenName screenClass:screenClass];
+    return YES;
+}
+
+- (BOOL)setUserProperty:(NSString *)propName propValue:(nullable NSString *)propValue
+{
+    NSLog(@"FirebaseAppDelegate: setUserProperty key= %@, val= %@", propName, propValue);
+    
+    [FIRAnalytics setUserPropertyString:propValue forName:propName];
+    return YES;
+}
+
 - (BOOL)sendFirebaseAnalyticsEvent:(NSString *)eventName jsonPayload:(NSString *)jsonPayload
 {
     NSLog(@"FirebaseAppDelegate: sendFirebaseAnalyticsEvent name= %@, parameter= %@", eventName, jsonPayload);

@@ -13,6 +13,23 @@ namespace extension_ios_firebase {
             jsonPayload:[NSString stringWithUTF8String:val_string(jsonPayload)]
         ]);
     }
+    
+    static value setUserProperty(value propName, value propValue) {
+        NSLog(@"extension_ios_firebase setUserProperty");
+        return alloc_bool([[FirebaseAppDelegate sharedInstance]
+            setUserProperty:[NSString stringWithUTF8String:val_string(propName)]
+            propValue:[NSString stringWithUTF8String:val_string(propValue)]
+        ]);
+    }
+    
+    static value setCurrentScreen(value screenName, value screenClass) {
+        NSLog(@"extension_ios_firebase setScreen");
+        return alloc_bool([[FirebaseAppDelegate sharedInstance]
+            setCurrentScreen:[NSString stringWithUTF8String:val_string(screenName)]
+            screenClass:[NSString stringWithUTF8String:val_string(screenClass)]
+        ]);
+    }
+    
 /*
     static value getInstanceIDToken() {
         NSLog(@"extension_ios_firebase getInstanceIDToken");

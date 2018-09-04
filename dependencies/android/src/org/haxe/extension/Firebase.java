@@ -56,6 +56,25 @@ public class Firebase extends Extension {
         firebaseAnalytics.logEvent(eventName, payloadBundle);
     }
 
+    public static void setUserProperty(String propName, String propValue) {
+        Log.d(TAG, "Firebase.java: setUserProperty name= " + propName + ", value= " + propValue);
+
+        Application mainApp = Extension.mainActivity.getApplication();
+        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(mainApp);
+
+
+        firebaseAnalytics.setUserProperty(propName, propValue);
+    }
+
+    public static void setCurrentScreen(String screenName, String screenClass) {
+        Log.d(TAG, "Firebase.java: setScreen name= " + screenName + ", class= " + screenClass);
+
+        Application mainApp = Extension.mainActivity.getApplication();
+        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(mainApp);
+
+        firebaseAnalytics.setCurrentScreen(Extension.mainActivity, screenName, screenClass);
+    }
+
     public static String getInstanceIDToken() {
         String idToken = FirebaseInstanceId.getInstance().getToken();
         Log.d(TAG, "Firebase.java: getInstanceIDToken= " + idToken);
