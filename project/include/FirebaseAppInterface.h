@@ -17,6 +17,9 @@ namespace extension_ios_firebase {
     
     static value setCurrentScreen(value screenName, value screenClass);
     DEFINE_PRIM(setCurrentScreen, 2);
+    
+    static value setUserID(value userID);
+    DEFINE_PRIM(setUserID, 1);
 
     //static value getInstanceIDToken();
     //DEFINE_PRIM(getInstanceIDToken, 0);

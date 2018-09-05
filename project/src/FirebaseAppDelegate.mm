@@ -161,6 +161,14 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
 
 */
 
+- (BOOL)setUserID:(NSString *)userID
+{
+    NSLog(@"FirebaseAppDelegate: setUserID id= %@", userID);
+    
+    [FIRAnalytics setUserID:userID];
+    return YES;
+}
+
 - (BOOL)setCurrentScreen:(NSString *)screenName screenClass:(NSString *)screenClass
 {
     NSLog(@"FirebaseAppDelegate: setScreen name= %@, class= %@", screenName, screenClass);

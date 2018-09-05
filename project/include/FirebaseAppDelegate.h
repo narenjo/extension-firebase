@@ -15,6 +15,8 @@
 
 - (BOOL)setCurrentScreen:(NSString *)screenName screenClass:(NSString *)screenClass;
 
+- (BOOL)setUserID:(NSString *)userID;
+
 //- (NSString*)getInstanceIDToken;
 
 @end

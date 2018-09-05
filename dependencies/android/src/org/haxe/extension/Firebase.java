@@ -82,6 +82,16 @@ public class Firebase extends Extension {
         return idToken;
     }
 
+    public static void setUserID(String userID) {
+        Log.d(TAG, "Firebase.java: setUserID id= " + userID);
+
+        Application mainApp = Extension.mainActivity.getApplication();
+        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(mainApp);
+
+
+        firebaseAnalytics.setUserId(userID);
+    }
+
 
 
     /**
