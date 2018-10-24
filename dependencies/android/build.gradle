@@ -2,9 +2,9 @@ apply plugin: 'com.android.library'
 
 buildscript {
     repositories {
-		jcenter()
+		google()
         mavenLocal()
-		maven { url 'https://dl.google.com/dl/android/maven2/' }
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.1.0'
@@ -25,15 +25,15 @@ android {
 
 dependencies {
 	repositories {
-        maven { url 'https://dl.google.com/dl/android/maven2/' }
+        google()
     }
 
     compile project(':deps:extension-api')
 	compile 'com.google.code.gson:gson:2.8.0'
-	compile 'com.google.firebase:firebase-messaging:10.0.1'
-    compile 'com.google.firebase:firebase-core:16.0.1'
-    compile 'com.google.firebase:firebase-crash:16.0.1'
-    compile 'com.google.firebase:firebase-analytics:16.0.1'
+	compile 'com.google.firebase:firebase-messaging:17.3.4'
+    compile 'com.google.firebase:firebase-core:16.0.4'
+    compile 'com.google.firebase:firebase-crash:16.2.1'
+    compile 'com.google.firebase:firebase-analytics:16.0.4'
 }
 
 //apply plugin: 'com.google.gms.google-services'
