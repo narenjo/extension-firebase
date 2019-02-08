@@ -166,6 +166,8 @@ public class Firebase extends Extension {
             }
         });
 
+
+        Firebase.getInstanceIDToken();
     }
 
 
