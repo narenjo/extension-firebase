@@ -2,14 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.haxe.extension.extension_firebase" >
 	
 	<application>
-
-		<meta-data
-			android:name="com.google.firebase.messaging.default_notification_icon"
-			android:resource="@drawable/ic_action_white" />
-	
-		<meta-data
-            android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="@string/default_notification_channel_id"/>
 		
 		<!-- [START firebase_service] -->
         <service android:name=".FirebaseExtesnionMessagingService">
