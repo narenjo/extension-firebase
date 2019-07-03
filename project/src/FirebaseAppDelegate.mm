@@ -39,6 +39,8 @@
 //NSString *const kGCMMessageIDKey = @"gcm.message_id";
 //NSString* firebaseInstanceIdToken = @"";
 
+FIRRemoteConfig *remoteConfig;
+
 + (instancetype)sharedInstance
 {
   static FirebaseAppDelegate *_sharedInstance;
@@ -90,6 +92,11 @@
         #endif
     }
     [[UIApplication sharedApplication] registerForRemoteNotifications];
+	
+	self.remoteConfig = [FIRRemoteConfig remoteConfig];
+	FIRRemoteConfigSettings *remoteConfigSettings = [[FIRRemoteConfigSettings alloc] initWithDeveloperModeEnabled:YES];
+	self.remoteConfig.configSettings = remoteConfigSettings;
+	[self.remoteConfig setDefaultsFromPlistFileName:@"RemoteConfigDefaults"];
 
     // Token may be null if it has not been generated yet.
     NSLog(@"FirebaseAppDelegate: FCM registration token: %@", [FIRMessaging messaging].FCMToken);
@@ -197,6 +204,25 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     return YES;
 }
 
+- (void)getRemoteConfig
+{
+    long expirationDuration = 3600;
+    // If your app is using developer mode, expirationDuration is set to 0, so each fetch will
+    // retrieve values from the Remote Config service.
+    if (self.remoteConfig.configSettings.isDeveloperModeEnabled) {
+        expirationDuration = 0;
+    }
 
+    [self.remoteConfig fetchWithExpirationDuration:expirationDuration completionHandler:^(FIRRemoteConfigFetchStatus status, NSError *error) {
+        if (status == FIRRemoteConfigFetchStatusSuccess)
+		{
+            [self.remoteConfig activateFetched];
+        }
+		else
+		{
+        }
+        [self displayWelcome];
+    }];
+}
 
 @end

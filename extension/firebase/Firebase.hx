@@ -10,6 +10,23 @@ import neko.Lib;
 import openfl.utils.JNI;
 #end
 
+import msignal.Signal;
+
+class RemoteConfigCallback
+{
+	public var crossPromoModelCallback:Signal1<String>;
+	
+	public function new(listener:String->Void)
+	{
+		crossPromoModelCallback = new Signal1<String>();
+		crossPromoModelCallback.add(listener);
+	}
+
+	public function setJSON(json:String):Void
+	{
+		crossPromoModelCallback.dispatch(json);
+	}
+}
 
 class Firebase {
 
@@ -59,7 +76,15 @@ class Firebase {
 			trace("setUserID not implemented on this platform.");
 		#end
 	}
-
+	
+	public static function getRemoteConfig(callback:RemoteConfigCallback):Void {
+		#if (ios || android)
+			return extension_firebase_get_remote_config(callback);
+		#else
+			trace("setUserID not implemented on this platform.");
+			return null;
+		#end
+	}
 
 	#if (ios)
 	private static var extension_firebase_send_analytics_event = Lib.load ("firebase", "sendFirebaseAnalyticsEvent", 2);
@@ -75,6 +100,7 @@ class Firebase {
 	private static var extension_firebase_set_user_property = JNI.createStaticMethod("org.haxe.extension.Firebase", "setUserProperty", "(Ljava/lang/String;Ljava/lang/String;)V");
 	private static var extension_firebase_get_instance_id_token = JNI.createStaticMethod("org.haxe.extension.Firebase", "getInstanceIDToken", "()Ljava/lang/String;");
 	private static var extension_firebase_set_user_id = JNI.createStaticMethod("org.haxe.extension.Firebase", "setUserID", "(Ljava/lang/String;)V");
+	private static var extension_firebase_get_remote_config = JNI.createStaticMethod("org.haxe.extension.Firebase", "getRemoteConfig", "(Lorg/haxe/lime/HaxeObject;)V");
 	#end
 	
 	

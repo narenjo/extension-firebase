@@ -19,6 +19,8 @@
 
 //- (NSString*)getInstanceIDToken;
 
+- (void)getRemoteConfig;
+
 @end
 
 

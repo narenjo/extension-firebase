@@ -16,9 +16,15 @@ import android.view.View;
 import android.support.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+//import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+//import com.google.firebase.remoteconfig.FirebaseRemoteConfigInfo;
+//import com.google.firebase.remoteconfig.FirebaseRemoteConfigValue;
+//import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
+//import com.google.samples.quickstart.config.BuildConfig;
+//import com.google.samples.quickstart.config.R;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.FirebaseInstanceIdService;
+//import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.FirebaseApp;
@@ -27,13 +33,19 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.Map;
+import java.util.Iterator;
 
 import org.haxe.extension.Extension;
+import org.haxe.lime.HaxeObject;
+//import org.json.JSONObject;
+//import org.json.JSONException;
 
 
 public class Firebase extends Extension {
 
     static final String TAG = "FIREBASE-EXTENSION";
+
+    /*private static FirebaseRemoteConfig mFirebaseRemoteConfig;*/
 
     private static Map<String, String> getPayloadFromJson(String jsonString) {
         Type type = new TypeToken<Map<String, String>>(){}.getType();
@@ -122,8 +134,43 @@ public class Firebase extends Extension {
 
         firebaseAnalytics.setUserId(userID);
     }
-
-
+	
+	
+	public static void getRemoteConfig(HaxeObject callback) {
+		
+		/*final HaxeObject cb = callback;
+        mFirebaseRemoteConfig.fetchAndActivate()
+                .addOnCompleteListener(new OnCompleteListener<Boolean>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Boolean> task) {
+                        if (task.isSuccessful())
+						{
+							JSONObject resultJson = new JSONObject();
+							Iterator<Map.Entry<String, FirebaseRemoteConfigValue>> it = mFirebaseRemoteConfig.getAll().entrySet().iterator();
+							try
+							{
+								while (it.hasNext())
+								{
+									Map.Entry<String, FirebaseRemoteConfigValue> pair = it.next();
+									resultJson.put(pair.getKey(), pair.getValue().asString());
+								}
+								cb.call("setJSON", new Object[] { resultJson.toString() });
+							}
+							catch (JSONException e)
+							{
+								
+							}
+                        } 
+						else
+						{
+                            
+                        }
+                    }
+                });*/
+				
+		final HaxeObject cb = callback;
+		cb.call("setJSON", new Object[] { "JSON_test" });
+	}
 
     /**
      * Called when the activity is starting.
@@ -171,6 +218,16 @@ public class Firebase extends Extension {
 
 
         Firebase.getInstanceIDToken();
+		
+		/*
+		mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
+                //.setDeveloperModeEnabled(BuildConfig.DEBUG)
+                .setMinimumFetchIntervalInSeconds(3600)
+                .build();
+        mFirebaseRemoteConfig.setConfigSettings(configSettings);
+        //mFirebaseRemoteConfig.setDefaults(R.xml.remote_config_defaults);
+		*/
     }
 
 

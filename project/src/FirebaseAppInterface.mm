@@ -44,4 +44,9 @@ namespace extension_ios_firebase {
         return alloc_string([idToken UTF8String]);
     }
  */
+ 
+	static value getRemoteConfig() {
+        NSLog(@"extension_ios_firebase getRemoteConfig");
+       
+    }
 }
