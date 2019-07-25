@@ -206,7 +206,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
 
 - (void)getRemoteConfig
 {
-    long expirationDuration = 3600;
+    /*long expirationDuration = 3600;
     // If your app is using developer mode, expirationDuration is set to 0, so each fetch will
     // retrieve values from the Remote Config service.
     if (self.remoteConfig.configSettings.isDeveloperModeEnabled) {
@@ -222,7 +222,7 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
 		{
         }
         [self displayWelcome];
-    }];
+    }];*/
 }
 
 @end
