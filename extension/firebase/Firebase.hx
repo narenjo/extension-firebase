@@ -78,7 +78,7 @@ class Firebase {
 	}
 	
 	public static function getRemoteConfig(callback:RemoteConfigCallback):Void {
-		#if (ios || android)
+		#if (android)
 			return extension_firebase_get_remote_config(callback);
 		#else
 			trace("setUserID not implemented on this platform.");

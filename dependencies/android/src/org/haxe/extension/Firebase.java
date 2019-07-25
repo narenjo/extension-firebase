@@ -37,8 +37,8 @@ import java.util.Iterator;
 
 import org.haxe.extension.Extension;
 import org.haxe.lime.HaxeObject;
-//import org.json.JSONObject;
-//import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONException;
 
 
 public class Firebase extends Extension {
@@ -169,7 +169,18 @@ public class Firebase extends Extension {
                 });*/
 				
 		final HaxeObject cb = callback;
-		cb.call("setJSON", new Object[] { "JSON_test" });
+		JSONObject resultJson = new JSONObject();
+		try
+		{
+			resultJson.put("cross_juicy", "{\"active\":\"0\",\"bundle\":\"juicy\",\"hard\":\"0\",\"ins_check\":\"1\",\"point_m3\":\"0\",\"point_auto\":\"0\",\"point_bank\":\"0\",\"point_icon\":\"1\",\"point_last_pack\":\"1\",\"tapzone\":\"0\",\"lvl\":\"22\"}");
+			resultJson.put("cross_slots", "{\"active\":\"0\",\"bundle\":\"slots\",\"hard\":\"0\",\"ins_check\":\"1\",\"point_m3\":\"0\",\"point_auto\":\"0\",\"point_bank\":\"0\",\"point_icon\":\"1\",\"point_last_pack\":\"1\",\"tapzone\":\"0\",\"lvl\":\"22\"}");
+			resultJson.put("cross_witch", "{\"active\":\"0\",\"bundle\":\"witch\",\"hard\":\"0\",\"ins_check\":\"1\",\"point_m3\":\"0\",\"point_auto\":\"0\",\"point_bank\":\"0\",\"point_icon\":\"1\",\"point_last_pack\":\"1\",\"tapzone\":\"0\",\"lvl\":\"22\"}");
+			cb.call("setJSON", new Object[] { resultJson.toString() });
+		}
+		catch (JSONException e)
+		{
+			
+		}
 	}
 
     /**
