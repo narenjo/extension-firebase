@@ -39,7 +39,7 @@
 //NSString *const kGCMMessageIDKey = @"gcm.message_id";
 //NSString* firebaseInstanceIdToken = @"";
 
-FIRRemoteConfig *remoteConfig;
+// FIRRemoteConfig *remoteConfig;
 
 + (instancetype)sharedInstance
 {
