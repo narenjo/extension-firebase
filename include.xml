@@ -13,7 +13,7 @@
 		<dependency path="dependencies/ios/Analytics/nanopb.framework" />
 		<dependency path="dependencies/ios/Messaging/FirebaseMessaging.framework" />
         	<dependency path="dependencies/ios/Messaging/Protobuf.framework" />
-		<dependency path="dependencies/ios/RemoteConfig/FirebaseRemoteConfig.framework"/>
+		<!--<dependency path="dependencies/ios/RemoteConfig/FirebaseRemoteConfig.framework"/>-->
         	<!--<dependency name="UserNotifications.framework" />-->
         	<ios linker-flags="-ObjC" />
 	</section>

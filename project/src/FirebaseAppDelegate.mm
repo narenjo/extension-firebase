@@ -16,6 +16,7 @@
 #endif
 */
 
+
 @interface NMEAppDelegate : NSObject <UIApplicationDelegate>
 @end
 
@@ -25,13 +26,14 @@
 #endif
 
 @implementation NMEAppDelegate(FirebaseAppDelegate)
-
+/*
     -(BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *) launchOptions
     {
         [FIRApp configure];
-        
+        NSLog(@"willFinishLaunchingWithOptions Firebase");
         return YES;
     }
+ */
 @end
 
 @implementation FirebaseAppDelegate
@@ -39,7 +41,7 @@
 //NSString *const kGCMMessageIDKey = @"gcm.message_id";
 //NSString* firebaseInstanceIdToken = @"";
 
-FIRRemoteConfig *remoteConfig;
+//FIRRemoteConfig *remoteConfig;
 
 + (instancetype)sharedInstance
 {

@@ -1,12 +1,16 @@
 #include "FirebaseAppDelegate.h"
 #include "FirebaseAppInterface.h"
+#import <Firebase.h>
 
-@implementation FirebaseAppInterface : NSObject
-@end
 
 namespace extension_ios_firebase {
 
-    static value sendFirebaseAnalyticsEvent(value eventName, value jsonPayload) {
+    void init() {
+        NSLog(@"firebase init");
+        [FIRApp configure];
+    }
+
+    value sendFirebaseAnalyticsEvent(value eventName, value jsonPayload) {
         //NSLog(@"extension_ios_firebase sendAnalyticsEvent");
         return alloc_bool([[FirebaseAppDelegate sharedInstance]
             sendFirebaseAnalyticsEvent:[NSString stringWithUTF8String:val_string(eventName)]
@@ -14,7 +18,7 @@ namespace extension_ios_firebase {
         ]);
     }
     
-    static value setUserProperty(value propName, value propValue) {
+    value setUserProperty(value propName, value propValue) {
         //NSLog(@"extension_ios_firebase setUserProperty");
         return alloc_bool([[FirebaseAppDelegate sharedInstance]
             setUserProperty:[NSString stringWithUTF8String:val_string(propName)]
@@ -22,7 +26,7 @@ namespace extension_ios_firebase {
         ]);
     }
     
-    static value setCurrentScreen(value screenName, value screenClass) {
+    value setCurrentScreen(value screenName, value screenClass) {
         //NSLog(@"extension_ios_firebase setScreen");
         return alloc_bool([[FirebaseAppDelegate sharedInstance]
             setCurrentScreen:[NSString stringWithUTF8String:val_string(screenName)]
@@ -30,7 +34,7 @@ namespace extension_ios_firebase {
         ]);
     }
     
-    static value setUserID(value userID) {
+    value setUserID(value userID) {
         //NSLog(@"extension_ios_firebase setUserID");
         return alloc_bool([[FirebaseAppDelegate sharedInstance]
            setUserID:[NSString stringWithUTF8String:val_string(userID)]
@@ -45,8 +49,8 @@ namespace extension_ios_firebase {
     }
  */
  
-	static value getRemoteConfig() {
-        NSLog(@"extension_ios_firebase getRemoteConfig");
-       
+	value getRemoteConfig() {
+       NSLog(@"extension_ios_firebase getRemoteConfig");
+       return alloc_string("");
     }
 }
