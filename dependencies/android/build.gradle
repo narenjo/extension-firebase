@@ -1,50 +1,26 @@
 apply plugin: 'com.android.library'
 
-buildscript {
-    repositories {
-		google()
-        mavenLocal()
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0'
-    }
-}
-
 android {
-    sourceSets {
-        main {
-            manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = ['src']
-            res.srcDirs = ['res']
-        }
-    }
-    compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
-    buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
+	sourceSets {
+		main {
+			manifest.srcFile 'AndroidManifest.xml'
+			java.srcDirs = ['src']
+			res.srcDirs = ['res']
+		}
+	}
+	compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
+	buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
 }
 
 dependencies {
 	repositories {
-        google()
-    }
+		google()
+	}
 
-    api project(':deps:extension-api')
+	api project(':deps:extension-api')
 	implementation 'com.google.code.gson:gson:2.8.0'
+	implementation "com.google.firebase:firebase-analytics:${rootProject.ext.firebaseAnalyticsVersion}"
+	implementation "com.google.firebase:firebase-messaging:${rootProject.ext.firebaseMessagingVersion}"
+	implementation "com.google.firebase:firebase-config:${rootProject.ext.firebaseConfigVersion}"
 	implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
-	
-	implementation 'com.google.firebase:firebase-iid:17.0.4'
-	implementation 'com.google.firebase:firebase-messaging:17.3.4'
-    implementation 'com.google.firebase:firebase-core:16.0.4'
-    implementation 'com.google.firebase:firebase-crash:16.2.1'
-    implementation 'com.google.firebase:firebase-analytics:16.0.4'
-	//implementation 'com.google.firebase:firebase-config:18.0.0'
-	
-	//implementation 'com.google.firebase:firebase-iid:19.0.1'
-    //implementation 'com.google.firebase:firebase-messaging:19.0.1'
-	//implementation 'com.google.firebase:firebase-core:17.0.0'
-	//implementation 'com.google.firebase:firebase-crash:16.2.1'
-	//implementation 'com.google.firebase:firebase-analytics:17.0.0'
-	//implementation 'com.google.firebase:firebase-config:18.0.0'
 }
-
-//apply plugin: 'com.google.gms.google-services'
