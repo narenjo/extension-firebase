@@ -76,6 +76,24 @@ class Firebase {
 			trace("setUserID not implemented on this platform.");
 		#end
 	}
+
+	public static function setCrashlyticsProperty (propName:String, propValue:String = null):Void {
+
+		#if (android)
+			extension_firebase_set_crashlytics_property(propName, propValue);
+		#else
+		trace("setUserProperty not implemented on this platform.");
+		#end
+	}
+
+	public static function setCrashlyticsUserID (userID:String):Void {
+
+		#if (android)
+			extension_firebase_set_crashlytics_user_id(userID);
+		#else
+		trace("setUserID not implemented on this platform.");
+		#end
+	}
 	
 	public static function getRemoteConfig(callback:RemoteConfigCallback):Void {
 		#if (android)
@@ -98,8 +116,10 @@ class Firebase {
 	private static var extension_firebase_send_analytics_event = JNI.createStaticMethod("org.haxe.extension.Firebase", "sendFirebaseAnalyticsEvent", "(Ljava/lang/String;Ljava/lang/String;)V");
 	private static var extension_firebase_set_current_screen = JNI.createStaticMethod("org.haxe.extension.Firebase", "setCurrentScreen", "(Ljava/lang/String;Ljava/lang/String;)V");
 	private static var extension_firebase_set_user_property = JNI.createStaticMethod("org.haxe.extension.Firebase", "setUserProperty", "(Ljava/lang/String;Ljava/lang/String;)V");
+	private static var extension_firebase_set_crashlytics_property = JNI.createStaticMethod("org.haxe.extension.Firebase", "setCrashlyticsProperty", "(Ljava/lang/String;Ljava/lang/String;)V");
 	private static var extension_firebase_get_instance_id_token = JNI.createStaticMethod("org.haxe.extension.Firebase", "getInstanceIDToken", "()Ljava/lang/String;");
 	private static var extension_firebase_set_user_id = JNI.createStaticMethod("org.haxe.extension.Firebase", "setUserID", "(Ljava/lang/String;)V");
+	private static var extension_firebase_set_crashlytics_user_id = JNI.createStaticMethod("org.haxe.extension.Firebase", "setCrashlyticsUserID", "(Ljava/lang/String;)V");
 	private static var extension_firebase_get_remote_config = JNI.createStaticMethod("org.haxe.extension.Firebase", "getRemoteConfig", "(Lorg/haxe/lime/HaxeObject;)V");
 	#end
 	

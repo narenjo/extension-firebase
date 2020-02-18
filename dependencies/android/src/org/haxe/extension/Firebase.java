@@ -40,6 +40,9 @@ import org.haxe.lime.HaxeObject;
 import org.json.JSONObject;
 import org.json.JSONException;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
+
 
 public class Firebase extends Extension {
 
@@ -134,8 +137,17 @@ public class Firebase extends Extension {
 
         firebaseAnalytics.setUserId(userID);
     }
-	
-	
+
+    public static void setCrashlyticsProperty(String propName, String propValue) {
+        Crashlytics.setString(propName, propValue);
+        Log.d(TAG, "Firebase.java: setCrashlyticsProperty name= " + propName + ", value= " + propValue);
+    }
+
+    public static void setCrashlyticsUserID(String userID) {
+        Crashlytics.setUserIdentifier(userID);
+        Log.d(TAG, "Firebase.java: setCrashlyticsUserID id= " + userID);
+    }
+
 	public static void getRemoteConfig(HaxeObject callback) {
 		
 		/*final HaxeObject cb = callback;
@@ -229,7 +241,10 @@ public class Firebase extends Extension {
 
 
         Firebase.getInstanceIDToken();
-		
+
+        Fabric.with(Extension.mainActivity, new Crashlytics());
+
+
 		/*
 		mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
@@ -293,7 +308,6 @@ public class Firebase extends Extension {
     public void onStart () {
 
         Log.d(TAG, "Firebase.java: onStart ");
-
     }
 
 
