@@ -13,9 +13,13 @@
 
 - (BOOL)setUserProperty:(NSString *)propName propValue:(NSString *)propValue;
 
+- (BOOL)setCrashlyticsProperty:(NSString *)propName propValue:(NSString *)propValue;
+
 - (BOOL)setCurrentScreen:(NSString *)screenName screenClass:(NSString *)screenClass;
 
 - (BOOL)setUserID:(NSString *)userID;
+
+- (BOOL)setCrashlyticsUserID:(NSString *)userID;
 
 //- (NSString*)getInstanceIDToken;
 

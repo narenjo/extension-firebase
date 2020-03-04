@@ -3,6 +3,8 @@
 #import <objc/runtime.h>
 #import <UIKit/UIKit.h>
 #import <Firebase.h>
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 
 // MESSAGING, disabled
 /*
@@ -56,6 +58,7 @@
 - (instancetype)_init
 {
   NSLog(@"FirebaseAppDelegate: _init");
+  [Fabric with:@[[Crashlytics class]]];
   return self;
 }
 
@@ -178,6 +181,14 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     return YES;
 }
 
+- (BOOL)setCrashlyticsUserID:(NSString *)userID
+{
+    NSLog(@"FirebaseAppDelegate: setCrashlyticsUserID id= %@", userID);
+
+    [CrashlyticsKit setUserIdentifier:userID];
+    return YES;
+}
+
 - (BOOL)setCurrentScreen:(NSString *)screenName screenClass:(NSString *)screenClass
 {
     NSLog(@"FirebaseAppDelegate: setScreen name= %@, class= %@", screenName, screenClass);
@@ -191,6 +202,14 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     NSLog(@"FirebaseAppDelegate: setUserProperty key= %@, val= %@", propName, propValue);
     
     [FIRAnalytics setUserPropertyString:propValue forName:propName];
+    return YES;
+}
+
+- (BOOL)setCrashlyticsProperty:(NSString *)propName propValue:(NSString *)propValue
+{
+    NSLog(@"FirebaseAppDelegate: setCrashlyticsProperty key= %@, val= %@", propName, propValue);
+
+    [CrashlyticsKit setObjectValue:propValue forKey:propName];
     return YES;
 }
 

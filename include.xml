@@ -3,6 +3,8 @@
 	
 	<section if="ios">
 		<ndll name="firebase" />
+		<dependency path="dependencies/ios/Crashlytics.framework" />
+		<dependency path="dependencies/ios/Fabric.framework" />
 		<dependency path="dependencies/ios/Analytics/FirebaseAnalytics.framework" />
         	<dependency path="dependencies/ios/Analytics/FirebaseCore.framework" />
 		<dependency path="dependencies/ios/Analytics/FirebaseCoreDiagnostics.framework" />

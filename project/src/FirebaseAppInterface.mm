@@ -25,7 +25,15 @@ namespace extension_ios_firebase {
             propValue:[NSString stringWithUTF8String:val_string(propValue)]
         ]);
     }
-    
+
+    value setCrashlyticsProperty(value propName, value propValue) {
+            //NSLog(@"extension_ios_firebase setCrashlyticsProperty");
+            return alloc_bool([[FirebaseAppDelegate sharedInstance]
+                setCrashlyticsProperty:[NSString stringWithUTF8String:val_string(propName)]
+                propValue:[NSString stringWithUTF8String:val_string(propValue)]
+            ]);
+        }
+
     value setCurrentScreen(value screenName, value screenClass) {
         //NSLog(@"extension_ios_firebase setScreen");
         return alloc_bool([[FirebaseAppDelegate sharedInstance]
@@ -38,6 +46,13 @@ namespace extension_ios_firebase {
         //NSLog(@"extension_ios_firebase setUserID");
         return alloc_bool([[FirebaseAppDelegate sharedInstance]
            setUserID:[NSString stringWithUTF8String:val_string(userID)]
+       ]);
+    }
+
+    value setCrashlyticsUserID(value userID) {
+        //NSLog(@"extension_ios_firebase setCrashlyticsUserID");
+        return alloc_bool([[FirebaseAppDelegate sharedInstance]
+           setCrashlyticsUserID:[NSString stringWithUTF8String:val_string(userID)]
        ]);
     }
     

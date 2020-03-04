@@ -79,19 +79,19 @@ class Firebase {
 
 	public static function setCrashlyticsProperty (propName:String, propValue:String = null):Void {
 
-		#if (android)
+		#if (android || ios)
 			extension_firebase_set_crashlytics_property(propName, propValue);
 		#else
-		trace("setUserProperty not implemented on this platform.");
+			trace("setCrashlyticsProperty not implemented on this platform.");
 		#end
 	}
 
 	public static function setCrashlyticsUserID (userID:String):Void {
 
-		#if (android)
+		#if (android || ios)
 			extension_firebase_set_crashlytics_user_id(userID);
 		#else
-		trace("setUserID not implemented on this platform.");
+			trace("setCrashlyticsUserID not implemented on this platform.");
 		#end
 	}
 	
@@ -108,8 +108,10 @@ class Firebase {
 	private static var extension_firebase_send_analytics_event = Lib.load ("firebase", "sendFirebaseAnalyticsEvent", 2);
 	private static var extension_firebase_set_current_screen = Lib.load ("firebase", "setCurrentScreen", 2);
 	private static var extension_firebase_set_user_property = Lib.load ("firebase", "setUserProperty", 2);
+	private static var extension_firebase_set_crashlytics_property = Lib.load ("firebase", "setCrashlyticsProperty", 2);
 	private static var extension_firebase_get_instance_id_token = Lib.load ("firebase", "getInstanceIDToken", 0);
 	private static var extension_firebase_set_user_id = Lib.load ("firebase", "setUserID", 1);
+	private static var extension_firebase_set_crashlytics_user_id = Lib.load ("firebase", "setCrashlyticsUserID", 1);
 	#end
 
 	#if (android)
