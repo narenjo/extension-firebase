@@ -16,10 +16,10 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-//import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 //import com.google.firebase.remoteconfig.FirebaseRemoteConfigInfo;
-//import com.google.firebase.remoteconfig.FirebaseRemoteConfigValue;
-//import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigValue;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 //import com.google.samples.quickstart.config.BuildConfig;
 //import com.google.samples.quickstart.config.R;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -47,8 +47,10 @@ import io.fabric.sdk.android.Fabric;
 public class Firebase extends Extension {
 
     static final String TAG = "FIREBASE-EXTENSION";
+    private static final String CONFIG_KEY_ABTEST = "ab_test";
 
-    /*private static FirebaseRemoteConfig mFirebaseRemoteConfig;*/
+
+    private static FirebaseRemoteConfig mFirebaseRemoteConfig;
 
     private static Map<String, String> getPayloadFromJson(String jsonString) {
         Type type = new TypeToken<Map<String, String>>(){}.getType();
@@ -149,15 +151,19 @@ public class Firebase extends Extension {
     }
 
 	public static void getRemoteConfig(HaxeObject callback) {
-		
-		/*final HaxeObject cb = callback;
+        Log.d(TAG, "GET REMOTE CONFIG");
+		final HaxeObject cb = callback;
         mFirebaseRemoteConfig.fetchAndActivate()
                 .addOnCompleteListener(new OnCompleteListener<Boolean>() {
                     @Override
                     public void onComplete(@NonNull Task<Boolean> task) {
                         if (task.isSuccessful())
 						{
-							JSONObject resultJson = new JSONObject();
+
+                            //String abTest = mFirebaseRemoteConfig.getString(CONFIG_KEY_ABTEST);
+                            Log.d(TAG, "GET REMOTE CONFIG SUCCESS");
+                            //cb.call1("setResult", abTest);
+						    JSONObject resultJson = new JSONObject();
 							Iterator<Map.Entry<String, FirebaseRemoteConfigValue>> it = mFirebaseRemoteConfig.getAll().entrySet().iterator();
 							try
 							{
@@ -166,21 +172,21 @@ public class Firebase extends Extension {
 									Map.Entry<String, FirebaseRemoteConfigValue> pair = it.next();
 									resultJson.put(pair.getKey(), pair.getValue().asString());
 								}
-								cb.call("setJSON", new Object[] { resultJson.toString() });
+								cb.call1("setResult", resultJson.toString());
 							}
 							catch (JSONException e)
 							{
-								
+                                Log.d(TAG, "PARSE REMOTE CONFIG ERROR");
 							}
                         } 
 						else
 						{
-                            
+                            Log.d(TAG, "GET REMOTE CONFIG ERROR");
                         }
                     }
-                });*/
+                });
 				
-		final HaxeObject cb = callback;
+		/*final HaxeObject cb = callback;
 		JSONObject resultJson = new JSONObject();
 		try
 		{
@@ -192,7 +198,7 @@ public class Firebase extends Extension {
 		catch (JSONException e)
 		{
 			
-		}
+		}*/
 	}
 
     /**
@@ -244,16 +250,13 @@ public class Firebase extends Extension {
 
         Fabric.with(Extension.mainActivity, new Crashlytics());
 
-
-		/*
 		mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
         FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
                 //.setDeveloperModeEnabled(BuildConfig.DEBUG)
-                .setMinimumFetchIntervalInSeconds(3600)
+                .setMinimumFetchIntervalInSeconds(60)
                 .build();
-        mFirebaseRemoteConfig.setConfigSettings(configSettings);
+        mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings);
         //mFirebaseRemoteConfig.setDefaults(R.xml.remote_config_defaults);
-		*/
     }
 
 

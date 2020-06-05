@@ -14,17 +14,16 @@ import msignal.Signal;
 
 class RemoteConfigCallback
 {
-	public var crossPromoModelCallback:Signal1<String>;
+	public var onResult:String -> Void;
 	
-	public function new(listener:String->Void)
+	public function new(callback:String->Void)
 	{
-		crossPromoModelCallback = new Signal1<String>();
-		crossPromoModelCallback.add(listener);
+		this.onResult = callback;
 	}
 
-	public function setJSON(json:String):Void
+	public function setResult(result:String):Void
 	{
-		crossPromoModelCallback.dispatch(json);
+		onResult(result);
 	}
 }
 
@@ -95,9 +94,10 @@ class Firebase {
 		#end
 	}
 	
-	public static function getRemoteConfig(callback:RemoteConfigCallback):Void {
+	public static function getRemoteConfig(onSuccess:String -> Void):Void {
+		//trace("-----------------------> get remote config");
 		#if (android)
-			return extension_firebase_get_remote_config(callback);
+			return extension_firebase_get_remote_config(new RemoteConfigCallback(onSuccess));
 		#else
 			trace("setUserID not implemented on this platform.");
 			return null;
