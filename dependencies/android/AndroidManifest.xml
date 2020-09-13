@@ -2,21 +2,27 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="org.haxe.extension.extension_firebase" >
 	<uses-sdk android:minSdkVersion="15" android:targetSdkVersion="19" />
 	<application>
+
+		<service android:name="com.google.firebase.components.ComponentDiscoveryService" >
+			<meta-data
+				android:name="com.google.firebase.components:com.google.firebase.iid.Registrar"
+				android:value="com.google.firebase.components.ComponentRegistrar" />
+		</service>
 		
 		<!-- [START firebase_service] -->
-        <service android:name=".FirebaseExtesnionMessagingService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-            </intent-filter>
-        </service>
-        <!-- [END firebase_service] -->
-        <service 
+		<service android:name=".FirebaseExtesnionMessagingService">
+			<intent-filter>
+				<action android:name="com.google.firebase.MESSAGING_EVENT"/>
+			</intent-filter>
+		</service>
+		<!-- [END firebase_service] -->
+		<service 
 			android:name=".FirebaseExtesnionJobService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
-            </intent-filter>
-        </service>
+			android:exported="false">
+			<intent-filter>
+				<action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+			</intent-filter>
+		</service>
 		
 	</application>
 	
