@@ -51,8 +51,7 @@ public class Firebase extends Extension {
 
 	private static FirebaseRemoteConfig mFirebaseRemoteConfig;
 
-	private static Callback cb;
-	private static String token;
+	private static String token = "";
 
 	private static Map<String, String> getPayloadFromJson(String jsonString) {
 		Type type = new TypeToken<Map<String, String>>(){}.getType();
@@ -79,29 +78,18 @@ public class Firebase extends Extension {
 	* The app is restored on a new device
 	* The user uninstalls/reinstall the app
 	* The user clears app data.*/
-	public static Callback getInstanceIDToken()
+	public static void getInstanceIDToken()
 	{
-		Firebase.cb = new Callback(){
-			public String getToken() {
-				return Firebase.token;
-			}
-		};
-
 		FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
 			@Override
 			public void onComplete(@NonNull Task<InstanceIdResult> task) {
 				if (!task.isSuccessful()) {
 					Log.w(TAG, "getInstanceId failed", task.getException());
+					return;
 				}
-				else
-				{
-					Firebase.token = task.getResult().getToken();
-					Firebase.cb.getToken();
-				}
+				Firebase.token = task.getResult().getToken();
 			}
 		});
-		
-		return Firebase.cb;
 	}
 
 	public interface Callback{
@@ -254,7 +242,7 @@ public class Firebase extends Extension {
 		});
 		*/
 		
-		Firebase.getInstanceIDToken().getToken();
+		Firebase.getInstanceIDToken();
 
 		Fabric.with(Extension.mainActivity, new Crashlytics());
 
