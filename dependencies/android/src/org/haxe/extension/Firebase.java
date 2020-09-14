@@ -26,7 +26,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.iid.FirebaseInstanceId;
 //import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.google.firebase.iid.InstanceIdResult;
-//import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.FirebaseApp;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -46,119 +46,124 @@ import io.fabric.sdk.android.Fabric;
 
 public class Firebase extends Extension {
 
-	static final String TAG = "FIREBASE-EXTENSION";
-	private static final String CONFIG_KEY_ABTEST = "ab_test";
-
-	private static FirebaseRemoteConfig mFirebaseRemoteConfig;
-
-	private static String token = "";
-
-	private static Map<String, String> getPayloadFromJson(String jsonString) {
-		Type type = new TypeToken<Map<String, String>>(){}.getType();
-		Map<String, String> payload = new Gson().fromJson(jsonString, type);
-		return payload;
-	}
+    static final String TAG = "FIREBASE-EXTENSION";
+    private static final String CONFIG_KEY_ABTEST = "ab_test";
 
 
-	private static Bundle getFirebaseAnalyticsBundleFromJson(String jsonString) {
-		Map<String, String> payloadMap = getPayloadFromJson(jsonString);
+    private static FirebaseRemoteConfig mFirebaseRemoteConfig;
 
-		Bundle payloadBundle = new Bundle();
-		for (Map.Entry<String, String> entry : payloadMap.entrySet()) {
-			payloadBundle.putString(entry.getKey(), entry.getValue());
-		}
-
-		return payloadBundle;
-	}
-
-	// Get token
-	/*
-	* The registration token may change when:
-	* The app deletes Instance ID
-	* The app is restored on a new device
-	* The user uninstalls/reinstall the app
-	* The user clears app data.*/
-	public static void getInstanceIDToken()
-	{
-		FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-			@Override
-			public void onComplete(@NonNull Task<InstanceIdResult> task) {
-				if (!task.isSuccessful()) {
-					Log.w(TAG, "getInstanceId failed", task.getException());
-					return;
-				}
-				Firebase.token = task.getResult().getToken();
-			}
-		});
-	}
-
-	public interface Callback{
-		String getToken();
-	}
-
-	public static void sendFirebaseAnalyticsEvent(String eventName, String jsonPayload) {
-		Log.d(TAG, "Firebase.java: sendFirebaseAnalyticsEvent name= " + eventName + ", payload= " + jsonPayload);
-
-		Application mainApp = Extension.mainActivity.getApplication();
-		FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(mainApp);
-
-		Bundle payloadBundle = getFirebaseAnalyticsBundleFromJson(jsonPayload);
-		firebaseAnalytics.logEvent(eventName, payloadBundle);
-	}
-
-	public static void setUserProperty(String propName, String propValue) {
-		Log.d(TAG, "Firebase.java: setUserProperty name= " + propName + ", value= " + propValue);
-
-		Application mainApp = Extension.mainActivity.getApplication();
-		FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(mainApp);
+    private static Map<String, String> getPayloadFromJson(String jsonString) {
+        Type type = new TypeToken<Map<String, String>>(){}.getType();
+        Map<String, String> payload = new Gson().fromJson(jsonString, type);
+        return payload;
+    }
 
 
-		firebaseAnalytics.setUserProperty(propName, propValue);
-	}
+    private static Bundle getFirebaseAnalyticsBundleFromJson(String jsonString) {
+        Map<String, String> payloadMap = getPayloadFromJson(jsonString);
 
-	public static void setCurrentScreen(String screenName, String screenClass) {
-		Log.d(TAG, "Firebase.java: setScreen name= " + screenName + ", class= " + screenClass);
+        Bundle payloadBundle = new Bundle();
+        for (Map.Entry<String, String> entry : payloadMap.entrySet()) {
+            payloadBundle.putString(entry.getKey(), entry.getValue());
+        }
 
-		Application mainApp = Extension.mainActivity.getApplication();
-		FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(mainApp);
+        return payloadBundle;
+    }
 
-		firebaseAnalytics.setCurrentScreen(Extension.mainActivity, screenName, screenClass);
-	}
+    // Get token
+    /*
+    * The registration token may change when:
+    * The app deletes Instance ID
+    * The app is restored on a new device
+    * The user uninstalls/reinstall the app
+    * The user clears app data.*/
+    public static String getInstanceIDToken()
+    {
+        final String token = FirebaseInstanceId.getInstance().getToken();
+        Log.d(TAG, "getInstanceId success: " + token);
 
-	public static void setUserID(String userID) {
-		Log.d(TAG, "Firebase.java: setUserID id= " + userID);
+        return token;
 
-		Application mainApp = Extension.mainActivity.getApplication();
-		FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(mainApp);
+        /*
+        FirebaseInstanceId.getInstance().getInstanceId()
+        .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                if (!task.isSuccessful()) {
+                    Log.d(TAG, "getInstanceId failed", task.getException());
+                    return;
+                }
+
+                Log.d(TAG, "getInstanceId success", task.getResult().getToken());
+            }
+        });
+        */
+    }
 
 
-		firebaseAnalytics.setUserId(userID);
-	}
+    public static void sendFirebaseAnalyticsEvent(String eventName, String jsonPayload) {
+        Log.d(TAG, "Firebase.java: sendFirebaseAnalyticsEvent name= " + eventName + ", payload= " + jsonPayload);
 
-	public static void setCrashlyticsProperty(String propName, String propValue) {
-		Crashlytics.setString(propName, propValue);
-		Log.d(TAG, "Firebase.java: setCrashlyticsProperty name= " + propName + ", value= " + propValue);
-	}
+        Application mainApp = Extension.mainActivity.getApplication();
+        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(mainApp);
 
-	public static void setCrashlyticsUserID(String userID) {
-		Crashlytics.setUserIdentifier(userID);
-		Log.d(TAG, "Firebase.java: setCrashlyticsUserID id= " + userID);
-	}
+        Bundle payloadBundle = getFirebaseAnalyticsBundleFromJson(jsonPayload);
+        firebaseAnalytics.logEvent(eventName, payloadBundle);
+    }
+
+    public static void setUserProperty(String propName, String propValue) {
+        Log.d(TAG, "Firebase.java: setUserProperty name= " + propName + ", value= " + propValue);
+
+        Application mainApp = Extension.mainActivity.getApplication();
+        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(mainApp);
+
+
+        firebaseAnalytics.setUserProperty(propName, propValue);
+    }
+
+    public static void setCurrentScreen(String screenName, String screenClass) {
+        Log.d(TAG, "Firebase.java: setScreen name= " + screenName + ", class= " + screenClass);
+
+        Application mainApp = Extension.mainActivity.getApplication();
+        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(mainApp);
+
+        firebaseAnalytics.setCurrentScreen(Extension.mainActivity, screenName, screenClass);
+    }
+
+    public static void setUserID(String userID) {
+        Log.d(TAG, "Firebase.java: setUserID id= " + userID);
+
+        Application mainApp = Extension.mainActivity.getApplication();
+        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(mainApp);
+
+
+        firebaseAnalytics.setUserId(userID);
+    }
+
+    public static void setCrashlyticsProperty(String propName, String propValue) {
+        Crashlytics.setString(propName, propValue);
+        Log.d(TAG, "Firebase.java: setCrashlyticsProperty name= " + propName + ", value= " + propValue);
+    }
+
+    public static void setCrashlyticsUserID(String userID) {
+        Crashlytics.setUserIdentifier(userID);
+        Log.d(TAG, "Firebase.java: setCrashlyticsUserID id= " + userID);
+    }
 
 	public static void getRemoteConfig(HaxeObject callback) {
-		Log.d(TAG, "GET REMOTE CONFIG");
+        Log.d(TAG, "GET REMOTE CONFIG");
 		final HaxeObject cb = callback;
-		mFirebaseRemoteConfig.fetchAndActivate()
-				.addOnCompleteListener(new OnCompleteListener<Boolean>() {
-					@Override
-					public void onComplete(@NonNull Task<Boolean> task) {
-						if (task.isSuccessful())
+        mFirebaseRemoteConfig.fetchAndActivate()
+                .addOnCompleteListener(new OnCompleteListener<Boolean>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Boolean> task) {
+                        if (task.isSuccessful())
 						{
 
-							//String abTest = mFirebaseRemoteConfig.getString(CONFIG_KEY_ABTEST);
-							Log.d(TAG, "GET REMOTE CONFIG SUCCESS");
-							//cb.call1("setResult", abTest);
-							JSONObject resultJson = new JSONObject();
+                            //String abTest = mFirebaseRemoteConfig.getString(CONFIG_KEY_ABTEST);
+                            Log.d(TAG, "GET REMOTE CONFIG SUCCESS");
+                            //cb.call1("setResult", abTest);
+						    JSONObject resultJson = new JSONObject();
 							Iterator<Map.Entry<String, FirebaseRemoteConfigValue>> it = mFirebaseRemoteConfig.getAll().entrySet().iterator();
 							try
 							{
@@ -171,15 +176,15 @@ public class Firebase extends Extension {
 							}
 							catch (JSONException e)
 							{
-								Log.d(TAG, "PARSE REMOTE CONFIG ERROR");
+                                Log.d(TAG, "PARSE REMOTE CONFIG ERROR");
 							}
-						} 
+                        } 
 						else
 						{
-							Log.d(TAG, "GET REMOTE CONFIG ERROR");
-						}
-					}
-				});
+                            Log.d(TAG, "GET REMOTE CONFIG ERROR");
+                        }
+                    }
+                });
 				
 		/*final HaxeObject cb = callback;
 		JSONObject resultJson = new JSONObject();
@@ -196,17 +201,17 @@ public class Firebase extends Extension {
 		}*/
 	}
 
-	/**
-	 * Called when the activity is starting.
-	 */
-	public void onCreate (Bundle savedInstanceState) {
+    /**
+     * Called when the activity is starting.
+     */
+    public void onCreate (Bundle savedInstanceState) {
 
-		Log.d(TAG, "Firebase extension onCreate ");
+        Log.d(TAG, "Firebase extension onCreate ");
 
-		FirebaseApp.initializeApp(mainContext);
+        FirebaseApp.initializeApp(mainContext);
 
-		// Handle possible data accompanying notification message.
-		Intent intent = null;
+        // Handle possible data accompanying notification message.
+        Intent intent = null;
 		try {
 			PackageManager pm = mainContext.getPackageManager();
 			if(pm != null) {
@@ -217,107 +222,106 @@ public class Firebase extends Extension {
 		} catch (Exception e) {
 			Log.d(TAG, "Failed to get application launch intent");
 		}
-		
-		Bundle intentBundle = null;
-		if (intent != null && intent.getExtras() != null) {
-			intentBundle = intent.getExtras();
-			for (String key : intentBundle.keySet()) {
-				Object value = intentBundle.get(key);
-				Log.d(TAG, "Launch intent Key: " + key + " Value: " + value);
-			}
-		}
+        
+        Bundle intentBundle = null;
+        if (intent != null && intent.getExtras() != null) {
+            intentBundle = intent.getExtras();
+            for (String key : intentBundle.keySet()) {
+                Object value = intentBundle.get(key);
+                Log.d(TAG, "Launch intent Key: " + key + " Value: " + value);
+            }
+        }
 
-		// subscribe for new messages
-		/*
-		FirebaseMessaging.getInstance().subscribeToTopic("news")
-		.addOnCompleteListener(new OnCompleteListener<Void>() {
-			@Override
-			public void onComplete(@NonNull Task<Void> task) {
-				String msg = "Successful Subscribed messages from Firebase";
-				if (!task.isSuccessful()) {
-					msg = "Failed Subscribed messages from Firebase";
-				}
-				Log.d(TAG, msg);
-			}
-		});
-		*/
-		
-		Firebase.getInstanceIDToken();
+        // subscribe for new messages
+        FirebaseMessaging.getInstance().subscribeToTopic("news")
+        .addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                String msg = "Successful Subscribed messages from Firebase";
+                if (!task.isSuccessful()) {
+                    msg = "Failed Subscribed messages from Firebase";
+                }
+                Log.d(TAG, msg);
+            }
+        });
 
-		Fabric.with(Extension.mainActivity, new Crashlytics());
+
+        Firebase.getInstanceIDToken();
+
+        Fabric.with(Extension.mainActivity, new Crashlytics());
 
 		mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-		FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
-				//.setDeveloperModeEnabled(BuildConfig.DEBUG)
-				.setMinimumFetchIntervalInSeconds(60)
-				.build();
-		mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings);
-		//mFirebaseRemoteConfig.setDefaults(R.xml.remote_config_defaults);
-	}
+        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
+                //.setDeveloperModeEnabled(BuildConfig.DEBUG)
+                .setMinimumFetchIntervalInSeconds(60)
+                .build();
+        mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings);
+        //mFirebaseRemoteConfig.setDefaults(R.xml.remote_config_defaults);
+    }
 
 
-	/**
-	 * Perform any final cleanup before an activity is destroyed.
-	 */
-	public void onDestroy () {
-
-
-
-	}
-
-
-	/**
-	 * Called as part of the activity lifecycle when an activity is going into
-	 * the background, but has not (yet) been killed.
-	 */
-	public void onPause () {
+    /**
+     * Perform any final cleanup before an activity is destroyed.
+     */
+    public void onDestroy () {
 
 
 
-	}
+    }
 
 
-	/**
-	 * Called after {@link #onStop} when the current activity is being
-	 * re-displayed to the user (the user has navigated back to it).
-	 */
-	public void onRestart () {
-
-
-
-	}
-
-
-	/**
-	 * Called after {@link #onRestart}, or {@link #onPause}, for your activity
-	 * to start interacting with the user.
-	 */
-	public void onResume () {
+    /**
+     * Called as part of the activity lifecycle when an activity is going into
+     * the background, but has not (yet) been killed.
+     */
+    public void onPause () {
 
 
 
-	}
+    }
 
 
-	/**
-	 * Called after {@link #onCreate} &mdash; or after {@link #onRestart} when
-	 * the activity had been stopped, but is now again being displayed to the
-	 * user.
-	 */
-	public void onStart () {
-
-		Log.d(TAG, "Firebase.java: onStart ");
-	}
-
-
-	/**
-	 * Called when the activity is no longer visible to the user, because
-	 * another activity has been resumed and is covering this one.
-	 */
-	public void onStop () {
+    /**
+     * Called after {@link #onStop} when the current activity is being
+     * re-displayed to the user (the user has navigated back to it).
+     */
+    public void onRestart () {
 
 
 
-	}
+    }
+
+
+    /**
+     * Called after {@link #onRestart}, or {@link #onPause}, for your activity
+     * to start interacting with the user.
+     */
+    public void onResume () {
+
+
+
+    }
+
+
+    /**
+     * Called after {@link #onCreate} &mdash; or after {@link #onRestart} when
+     * the activity had been stopped, but is now again being displayed to the
+     * user.
+     */
+    public void onStart () {
+
+        Log.d(TAG, "Firebase.java: onStart ");
+    }
+
+
+    /**
+     * Called when the activity is no longer visible to the user, because
+     * another activity has been resumed and is covering this one.
+     */
+    public void onStop () {
+
+
+
+    }
 
 }
