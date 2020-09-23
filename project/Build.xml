@@ -13,12 +13,19 @@
 	<files id="iphone">
 
 		<compilerflag value="-Iinclude"/>
+		<compilerflag value="-F../dependencies/ios/" />
 		<compilerflag value="-F../dependencies/ios/Analytics/" />
+		<compilerflag value="-F../dependencies/ios/Messaging/" />
 		<compilerflag value="-I../dependencies/ios/includes"/>
+		<!--<compilerflag value="-F../dependencies/ios/RemoteConfig"/>-->
 
 		<file name="src/FirebaseAppDelegate.mm" />
 		<file name="src/FirebaseAppInterface.mm"/>
 
+	</files>
+	
+	<files id="android">
+		<file name="src/FirebaseAppInterface.cpp" />
 	</files>
 	
 	<set name="SLIBEXT" value=".lib" if="windows"/>

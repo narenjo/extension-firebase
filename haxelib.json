@@ -1,10 +1,10 @@
 {
   "name": "extension_firebase",
-  "url": "",
+  "url": "https://github.com/narenjo/extension-firebase",
   "license": "MIT",
   "tags": [],
   "description": "",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "releasenote": "",
   "contributors": [""],
   "dependencies": {

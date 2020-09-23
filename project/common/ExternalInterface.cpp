@@ -7,6 +7,7 @@
 #endif
 
 #include <hx/CFFI.h>
+#include <FirebaseAppInterface.h>
 
 extern "C" {
 
@@ -15,5 +16,8 @@ extern "C" {
     }
     DEFINE_ENTRY_POINT (firebase_main);
 
-    extern "C" int firebase_register_prims () { return 0; }
+    extern "C" int firebase_register_prims () {
+        extension_ios_firebase::init();
+        return 0; 
+    }
 }

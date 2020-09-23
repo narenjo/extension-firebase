@@ -1,0 +1,2 @@
+# extension-firebase
+firebase
